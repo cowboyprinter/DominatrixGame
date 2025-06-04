@@ -20,7 +20,7 @@
     <meta name="twitter:image" content="https://www.cowboyprinter.com/wp-content/uploads/2023/03/20230218175001_00130.png"> <meta name="twitter:image:alt" content="A scene from The Dominatrix Game">
     <meta name="author" content="CowboyPrinter"> <meta name="robots" content="index, follow"> <meta name="theme-color" content="#000000">
 
-    <title>CSS Background Transition Demo</title>
+    <title>The Dominatrix Game</title>
     <style>
         * {
             margin: 0;
@@ -41,6 +41,11 @@
             height: 100vh;
             width: 100%;
             overflow: hidden;
+
+
+
+
+
         }
         
         .bg {
@@ -98,7 +103,27 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
         }
-        
+        /* This is a NEW rule-set specifically for animating the .bg-content
+        when its parent .bg element has the .active class. */
+        .bg.active .bg-content {
+            animation-name: slideAndFadeOutToRight;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-in;
+            animation-delay: 3.5s; /* Updated delay */
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+
+        /* This is a NEW rule-set specifically for animating the ::before pseudo-element
+        of a .bg element that has the .active class. */
+        .bg.active::before {
+            animation-name: fadeOutOverlay;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-out;
+            animation-delay: 3.5s; /* Updated delay */
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }        
         h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
@@ -139,7 +164,68 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-        
+        /* === Animations starting after 3.5 seconds === */
+
+        /* Animate h1 inside the active .bg-content */
+        .bg.active .bg-content h1 {
+            animation-name: slideAndFadeOutToRight;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-in;
+            animation-delay: 3.5s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+
+        /* Animate p inside the active .bg-content */
+        .bg.active .bg-content p {
+            animation-name: slideAndFadeOutToRight;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-in;
+            animation-delay: 3.5s; /* Same delay as h1 */
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+
+        .bg.active .bg-content {
+            /* Apply two distinct animations: */
+            animation-name: fadeOutBgContentStyling, fadeOutElementOpacity;
+            animation-duration: 0.8s, 0.8s; /* Duration for each animation respectively */
+            animation-timing-function: ease-out, ease-in; /* Timing function for each */
+            animation-delay: 3.5s, 7.7s; /* Delay for each: 3.5s for styling, 5.7s for overall opacity */
+            animation-fill-mode: forwards, forwards; /* Fill mode for each */
+            animation-iteration-count: 1, 1; /* Iteration count for each */
+  /*
+    Note: The order of values in each animation property corresponds to the
+    order of animation names in `animation-name`.
+    1st set of values -> fadeOutBgContentStyling
+    2nd set of values -> fadeOutElementOpacity
+  */
+        }
+
+        /* Animate the ::before overlay of the active .bg div */
+        .bg.active::before {
+            animation-name: fadeOutOverlay;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-out;
+            animation-delay: 3.5s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+        }
+
+
+        /* === Animation starting after 5.7 seconds (3.5s + 2.2s) === */
+
+        /* Animate the button(s) with class .btn inside the active .bg-content */
+        /*.bg.active .bg-content .btn {
+        /* This more specific selector will override the general .btn animation
+            once this animation is due to start. */
+        /*    animation-name: slideAndFadeOutToRight;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-in;
+            animation-delay: 5.7s; /* 3.5s (for content) + 2.2s (extra button visibility) */
+        /*    animation-fill-mode: forwards;
+            animation-iteration-count: 1; */
+              
         .controls {
             position: absolute;
             bottom: 66px;
@@ -192,9 +278,51 @@
             100% {
                 box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
             }
+            }
+
+        @keyframes slideAndFadeOutToRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100vw); /* Slide one full viewport width to the right */
+                opacity: 0;                   /* Fade out completely */
+            }
+            }
+
+        @keyframes fadeOutOverlay {
+            from {
+                opacity: 1; /* The ::before element's own opacity */
+            }
+            to {
+                opacity: 0;
+            }
+            }
+            
+        /* Fades out the background and border styling of the .bg-content box */
+        @keyframes fadeOutBgContentStyling {
+            from {
+                background-color: rgba(0, 0, 0, 0.7); /* Current .bg-content background */
+                border-color: rgba(255, 255, 255, 0.1); /* Current .bg-content border */
+                /* You could add box-shadow here too if you want it to animate to 'none'
+                though opacity/color animations are often smoother for complex properties. */
+            }
+            to {
+                background-color: transparent;
+                border-color: transparent;
+                /* backdrop-filter will have no visible effect if background is transparent */
+            }
         }
         
-        
+        @keyframes fadeOutElementOpacity {
+            from {
+                 opacity: 1; /* Assuming initial opacity is 1 */
+            }
+            to {
+                 opacity: 0;
+            }
+        }
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
