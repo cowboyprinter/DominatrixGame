@@ -194,31 +194,6 @@
             }
         }
         
-        .info-panel {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            max-width: 300px;
-            z-index: 10;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 1s ease-out;
-        }
-        
-        .info-panel h3 {
-            margin-bottom: 10px;
-            color: #ff6b6b;
-        }
-        
-        .info-panel p {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-        
         
         @media (max-width: 768px) {
             h1 {
@@ -233,14 +208,7 @@
                 padding: 25px;
             }
             
-            .info-panel, .explanation {
-                max-width: 250px;
-                font-size: 0.8rem;
-                top: auto;        /* Remove the 'top' constraint */
-                right: auto;      /* Remove the 'right' constraint */
-                bottom: 20px;     /* Position 20px from the bottom */
-                left: 20px;       /* Position 20px from the left */
-            }
+           
         }
     </style>
 </head>
@@ -270,17 +238,7 @@
                 →
             </div>
         </div>
-        
-        <div class="info-panel">
-            <h3>THE DOMINATRIX GAME</h3>
-            <p>• Choose your Dominator</p>
-            <p>• Negotiate your sub/dom contract</p>
-            <p>• Try to fulfill your part of The Bargain</p>
-            <p>• Accept punishment for failure</p>
-            <p>• Be Forgiven for your weaknesses</p>
-            <p>• Be Stronger next time</p>
-        </div>
-       
+      
     </div>
 
     <script>
